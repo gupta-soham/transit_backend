@@ -6,18 +6,19 @@ interface AuthRequest extends Request {
 }
 
 export const authenticate = (req: AuthRequest, res: Response, next: NextFunction): void => {
-  const token = req.headers['authorization']?.split(' ')[1];
+  // Try to get token from cookies first, then from Authorization header as fallback
+  const accessToken = req.cookies?.accessToken || req.headers['authorization']?.split(' ')[1];
 
-  if (!token) {
-    res.status(401).json({ error: 'No token provided' });
+  if (!accessToken) {
+    res.status(401).json({ error: 'Authentication required' });
     return;
   }
 
   try {
-    const decoded = verifyToken(token);
+    const decoded = verifyToken(accessToken);
     req.user = decoded; // Attach user info to request
     next();
   } catch (error) {
-    res.status(401).json({ error: 'Invalid token' });
+    res.status(401).json({ error: 'Invalid or expired token' });
   }
 };

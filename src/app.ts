@@ -3,6 +3,7 @@ import session from 'express-session';
 import cors from "cors"
 import passport from './utils/passport';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/user/userRoutes';
 import { setupSwagger } from "./swagger";
@@ -13,15 +14,15 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-    origin: process.env.FRONTEND_APP_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
+  origin: process.env.FRONTEND_APP_URL,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
 }));
 
 // Middleware
 app.use(bodyParser.json());
-
 app.use(express.json());
+app.use(cookieParser()); // Add cookie-parser middleware
 
 // swagger ui
 setupSwagger(app);
@@ -46,8 +47,8 @@ app.use('/api/user', userRoutes)
 
 
 
-app.get('/',(req,res)=>{
-    res.send('hello');
+app.get('/', (req, res) => {
+  res.send('hello');
 })
 
 // Error handling middleware
