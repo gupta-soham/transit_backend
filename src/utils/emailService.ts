@@ -3,8 +3,8 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const url = `${process.env.BACKEND_URL}/verify-email?token=${token}`;
-  
+  const url = `${process.env.BACKEND_URL}/api/auth/verify-email?token=${token}`;
+
   try {
     await resend.emails.send({
       from: 'Transit <noreply@transitco.in>',
@@ -20,7 +20,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 };
 
 export const sendResetEmail = async (email: string, token: string) => {
-    const url = `${process.env.BACKEND_URL}/reset-password?token=${token}`;
+  const url = `${process.env.BACKEND_URL}/reset-password?token=${token}`;
   try {
     await resend.emails.send({
       from: 'Transit <noreply@transitco.in>', // Make sure this is a valid email
