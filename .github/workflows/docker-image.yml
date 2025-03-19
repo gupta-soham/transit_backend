@@ -21,7 +21,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-            docker build -t abhitsahu/your-app:latest -f backend/Dockerfile backend/
+            docker build -t abhitsahu/your-app:latest -f Dockerfile 
             docker push abhitsahu/your-app:latest
 
       - name: Deploy to AWS EC2
