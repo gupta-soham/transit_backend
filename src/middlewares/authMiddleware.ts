@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { verifyToken } from '../utils/jwtService';
 
 interface AuthRequest extends Request {
-  user?: any; // can replace 'any' with a more specific type if you have a user type defined
+  user?: any;
 }
 
 export const authenticate = (req: AuthRequest, res: Response, next: NextFunction): void => {

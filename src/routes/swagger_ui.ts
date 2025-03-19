@@ -50,39 +50,39 @@
 
 
 
-//VERIFY EMAIL
+// //VERIFY EMAIL
 
-    /**
-     * @swagger
-     * /api/auth/verify-email:
-     *   get:
-     *     summary: Verify user email
-     *     description: Verifies a user's email using a token sent via email.
-     *     tags: [Auth]
-     *     parameters:
-     *       - in: query
-     *         name: token
-     *         required: true
-     *         schema:
-     *           type: string
-     *           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-     *         description: JWT token received via email for verification
-     *     responses:
-     *       200:
-     *         description: Email verified successfully
-     *         content:
-     *           application/json:
-     *             schema:
-     *               type: object
-     *               properties:
-     *                 message:
-     *                   type: string
-     *                   example: "Email verified successfully. You can now log in."
-     *       400:
-     *         description: Invalid or expired token
-     *       500:
-     *         description: Server error
-     */
+//     /**
+//      * @swagger
+//      * /api/auth/verify-email:
+//      *   get:
+//      *     summary: Verify user email
+//      *     description: Verifies a user's email using a token sent via email.
+//      *     tags: [Auth]
+//      *     parameters:
+//      *       - in: query
+//      *         name: token
+//      *         required: true
+//      *         schema:
+//      *           type: string
+//      *           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+//      *         description: JWT token received via email for verification
+//      *     responses:
+//      *       200:
+//      *         description: Email verified successfully
+//      *         content:
+//      *           application/json:
+//      *             schema:
+//      *               type: object
+//      *               properties:
+//      *                 message:
+//      *                   type: string
+//      *                   example: "Email verified successfully. You can now log in."
+//      *       400:
+//      *         description: Invalid or expired token
+//      *       500:
+//      *         description: Server error
+//      */
 
 //LOGIN BY EMAIL OR PHONE NUMBER
 
@@ -493,6 +493,39 @@
      */
 
 
+//Logout 
+
+/**
+ * @swagger
+ * /api/auth/logout:
+ *   post:
+ *     summary: Logout the authenticated user
+ *     description: Clears authentication cookies and deletes the session from the database.
+ *     tags: [Auth]
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully logged out
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Logged out successfully"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Logout failed"
+ */
 
 
 

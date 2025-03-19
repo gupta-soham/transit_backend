@@ -351,7 +351,7 @@ export const sendResetEmailController = async (req: Request, res: Response, next
     }
 
     // Generate a reset token and set expiration time
-    const resetToken = generateToken(user.id); // You can also use a random string
+    const resetToken = generateToken(user.id);
     const expiresAt = addHours(new Date(), 1); // Token expires in 1 hour
 
     // Update user with reset token and expiration

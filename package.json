@@ -2,8 +2,8 @@
   "name": "t_backend",
   "scripts": {
     "dev": "ts-node ./src/app.ts",
-    "start": "nodemon ./src/app.ts",
     "build": "tsc",
+    "start": "node dist/app.js",
     "postinstall": "prisma generate"
   },
   "keywords": [],

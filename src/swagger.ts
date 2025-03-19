@@ -16,9 +16,6 @@ const options: swaggerJsdoc.Options = {
       {
         url: process.env.BACKEND_URL || "https://api.transitco.in",
       },
-      {
-        url: "https://api.transitco.in",
-      }
     ],
     components: {
         securitySchemes: {

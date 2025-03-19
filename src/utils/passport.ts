@@ -1,6 +1,11 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import { prisma } from '../prismaClient'; // Import your Prisma client
+import { prisma } from '../prismaClient';
+require("dotenv").config();
+
+// console.log('GOOGLE_CLIENT_ID:', process.env.GOOGLE_CLIENT_ID);
+// console.log('GOOGLE_CLIENT_SECRET:', process.env.GOOGLE_CLIENT_SECRET);
+// console.log('BACKEND_URL:', process.env.BACKEND_URL);
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID!,

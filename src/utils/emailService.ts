@@ -20,7 +20,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 };
 
 export const sendResetEmail = async (email: string, token: string) => {
-  const url = `${process.env.BACKEND_URL}/reset-password?token=${token}`;
+  const url = `${process.env.BACKEND_URL}/api/auth/reset-password?token=${token}`;
   try {
     await resend.emails.send({
       from: 'Transit <noreply@transitco.in>', // Make sure this is a valid email
