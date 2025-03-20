@@ -21,8 +21,8 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-            docker build -t abhitsahu/your-app:latest -f Dockerfile .
-            docker push abhitsahu/your-app:latest
+            docker build -t abhitsahu/transit-backend:latest -f Dockerfile .
+            docker push abhitsahu/transit-backend:latest
 
       - name: Deploy to AWS EC2
         uses: appleboy/ssh-action@v0.1.10
@@ -31,7 +31,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            docker stop your-app || true
-            docker rm your-app || true
-            docker pull abhitsahu/your-app:latest
-            docker run -d -p 8000:8000 --name your-app --env-file /home/ubuntu/.env abhitsahu/your-app:latest
+            docker stop transit-backend || true
+            docker rm transit-backend || true
+            docker pull abhitsahu/transit-backend:latest
+            docker run -d -p 8000:8000 --name transit-backend --env-file /home/ubuntu/.env abhitsahu/transit-backend:latest
