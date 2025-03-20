@@ -14,7 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: process.env.FRONTEND_APP_URL,
+  origin: '*',
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
@@ -48,7 +48,7 @@ app.use('/api/user', userRoutes)
 
 
 app.get('/', (req, res) => {
-  res.send('hello');
+  res.send('hello users');
 })
 
 // Error handling middleware
