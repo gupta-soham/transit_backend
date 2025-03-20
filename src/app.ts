@@ -48,7 +48,7 @@ app.use('/api/user', userRoutes)
 
 
 app.get('/', (req, res) => {
-  res.send('hello users');
+  res.send('hello users done');
 })
 
 // Error handling middleware
