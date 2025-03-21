@@ -9,6 +9,7 @@ import userRoutes from './routes/user/userRoutes';
 import { setupSwagger } from "./swagger";
 import errorHandler from './middlewares/errorHandler'; // Import the error handler
 import { limiter } from './middlewares/rateLimiter';
+import cabRoutes from './routes/cab/cabRoutes';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -42,10 +43,8 @@ app.use(limiter);
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/user', userRoutes)
-
-
-
+app.use('/api/user', userRoutes);
+app.use('/api/cab', cabRoutes)
 
 app.get('/', (req, res) => {
   res.send('hello users done');
