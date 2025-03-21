@@ -47,7 +47,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/cab', cabRoutes)
 
 app.get('/', (req, res) => {
-  res.send('hello users done');
+  res.send('hello Transit');
 })
 
 // Error handling middleware
