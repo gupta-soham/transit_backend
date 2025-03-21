@@ -14,6 +14,8 @@ import cabRoutes from './routes/cab/cabRoutes';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.set('trust proxy', 1);
+
 app.use(cors({
   origin: '*',
   methods: ["GET", "POST", "PUT", "DELETE"],
