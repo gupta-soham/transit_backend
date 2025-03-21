@@ -140,7 +140,7 @@ export const login = async (req: Request, res: Response) => {
 
     // Check if email or phone number is verified
     if (!user.emailVerified) {
-      return res.status(403).json({ error: 'Email is verified' });
+      return res.status(403).json({ error: 'Email is not verified' });
     }
 
     // Generate access and refresh tokens

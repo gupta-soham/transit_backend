@@ -14,7 +14,7 @@ export const sendOtp = async (phoneNumber: string, otp: string) => {
           'Content-Type':'application/json',
         },
       });
-      console.log(`Sent OTP ${otp} to phone number ${phoneNumber}`);
+      // console.log(`Sent OTP ${otp} to phone number ${phoneNumber}`);
       return response.data;
   }
   catch (error) {

@@ -17,10 +17,19 @@ const PORT = process.env.PORT || 3000;
 app.set('trust proxy', 1);
 
 app.use(cors({
-  origin: '*',
+  origin: process.env.FRONTEND_APP_URL,
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", process.env.FRONTEND_APP_URL);
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
 
 // Middleware
 app.use(bodyParser.json());
