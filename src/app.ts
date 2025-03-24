@@ -1,14 +1,15 @@
-import express from 'express';
-import session from 'express-session';
-import cors from "cors"
-import passport from './utils/passport';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import cors from "cors";
+import express from 'express';
+import session from 'express-session';
+import errorHandler from './middlewares/errorHandler'; // Import the error handler
 import authRoutes from './routes/authRoutes';
+import cabRoutes from './routes/cab/cabRoutes';
+import webhookRoutes from './routes/cab/webhookRoutes';
 import userRoutes from './routes/user/userRoutes';
 import { setupSwagger } from "./swagger";
-import errorHandler from './middlewares/errorHandler'; // Import the error handler
-import cabRoutes from './routes/cab/cabRoutes';
+import passport from './utils/passport';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -51,11 +52,12 @@ app.use(passport.session());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
-app.use('/api/cab', cabRoutes)
+app.use('/api/cab', cabRoutes);
+app.use('/api/webhook', webhookRoutes);
 
 app.get('/', (req, res) => {
   res.send('Transit');
-})
+});
 
 // Error handling middleware
 app.use(errorHandler); // Use the error handler after all routes
@@ -63,5 +65,6 @@ app.use(errorHandler); // Use the error handler after all routes
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
-  console.log(`Swagger docs available at ${process.env.BACKEND_URL}/api-docs`);
+  console.log(`Webhook endpoint available at ${process.env.BACKEND_URL || `http://localhost:${PORT}`}/api/webhook/gozo`);
+  console.log(`Swagger docs available at ${process.env.BACKEND_URL || `http://localhost:${PORT}`}/api-docs`);
 });

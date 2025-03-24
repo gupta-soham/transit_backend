@@ -14,7 +14,6 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-
 model User {
   id                  String    @id @default(cuid())
   email               String    @unique
@@ -29,13 +28,12 @@ model User {
   gender              String?
   dob                 DateTime?
   passport            String?
-  resetToken          String?  
-  resetTokenExpiresAt DateTime? 
+  resetToken          String?
+  resetTokenExpiresAt DateTime?
 
-  sessions      Session[]
-  accounts      Account[]
-  // paymentMethods PaymentMethod[]
-  // bookings      Booking[]
+  sessions Session[]
+  accounts Account[]
+  bookings Booking[]
 
   @@map("user")
 }
@@ -76,7 +74,7 @@ model Account {
 }
 
 model Verification {
-  id         String    @id @default(cuid())
+  id         String   @id @default(cuid())
   identifier String
   value      String
   expiresAt  DateTime
@@ -87,12 +85,77 @@ model Verification {
 }
 
 model Otp {
-  id         String   @id @default(cuid())
+  id          String   @id @default(cuid())
   phoneNumber String
-  otp        String
-  expiresAt  DateTime
-  createdAt  DateTime @default(now())
+  otp         String
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
 
   @@map("otp")
 }
 
+// Cab Related schema
+model Booking {
+  id         String   @id @default(cuid())
+  bookingId  String   @unique
+  orderRefId String?  @unique
+  status     String
+  otp        String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Associations
+  userId   String?
+  user     User?   @relation(fields: [userId], references: [id])
+  cabId    String?
+  cab      Cab?    @relation(fields: [cabId], references: [id])
+  driverId String?
+  driver   Driver? @relation(fields: [driverId], references: [id])
+
+  // Trip data
+  tripStartDate DateTime?
+  tripStartTime String?
+  tripEndDate   DateTime?
+  tripEndTime   String?
+  lastLatitude  String?
+  lastLongitude String?
+
+  // Cancellation details
+  cancellationReason  String?
+  cancellationCharge  Float?
+  refundAmount        Float?
+  cancellationMessage String?
+
+  @@map("booking")
+}
+
+model Cab {
+  id          String   @id @default(cuid())
+  cabId       Int      @unique
+  model       String?
+  number      String? // Vehicle number
+  hasCNG      Boolean  @default(false)
+  hasElectric Boolean  @default(false)
+  roofTop     Boolean  @default(false)
+  isAttached  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  bookings     Booking[]
+  licensePlate String[]
+
+  @@map("cab")
+}
+
+model Driver {
+  id            String   @id @default(cuid())
+  name          String
+  contactCode   String?
+  contactNumber String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  bookings Booking[]
+
+  @@map("driver")
+}
