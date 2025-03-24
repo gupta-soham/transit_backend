@@ -49,16 +49,13 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-//integrated rate limiting
-app.use(limiter);
-
 // Routes
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes, limiter);
 app.use('/api/user', userRoutes);
 app.use('/api/cab', cabRoutes)
 
 app.get('/', (req, res) => {
-  res.send('hello Transit');
+  res.send('Transit');
 })
 
 // Error handling middleware

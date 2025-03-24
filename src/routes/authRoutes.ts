@@ -1,22 +1,20 @@
-import { Router, RequestHandler } from 'express';
+import { RequestHandler, Router } from 'express';
 import {
-  register,
-  verifyEmail,
-  login,
-  sendOtpToPhone,
-  verifyOtp,
-  resetPassword,
-  sendResetEmailController,
   googleauth,
-  updateUserDetails,
+  login,
+  logout,
   refreshAccessToken,
-  logout
+  register,
+  resetPassword,
+  sendOtpToPhone,
+  sendResetEmailController,
+  updateUserDetails,
+  verifyEmail,
+  verifyOtp
 } from '../controllers/authController';
 
-import { getProfile, updateProfile } from '../controllers/auth_private';
-import { authenticate } from "../middlewares/authMiddleware";
-import { limiter } from '../middlewares/rateLimiter';
 import passport from 'passport';
+import { authenticate } from "../middlewares/authMiddleware";
 
 const router = Router();
 
@@ -29,7 +27,7 @@ router.post('/register', (register as unknown) as RequestHandler);
 router.get('/verify-email', (verifyEmail as unknown) as RequestHandler);
 
 // User login
-router.post('/login', limiter, (login as unknown) as RequestHandler);
+router.post('/login', (login as unknown) as RequestHandler);
 
 //add more details authenicate user
 router.put("/addDetails", authenticate, updateUserDetails as unknown as RequestHandler);

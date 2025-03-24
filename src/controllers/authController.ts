@@ -225,15 +225,31 @@ export const logout = async (req: Request, res: Response) => {
       });
     }
 
-    // Clear cookies
-    res.clearCookie('accessToken');
-    res.clearCookie('refreshToken');
+    // Clear cookies properly
+    res.clearCookie("accessToken", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
 
-    return res.status(200).json({ message: 'Logged out successfully' });
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    res.clearCookie("connect.sid", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    })
+
+    return res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
-    return res.status(500).json({ error: 'Logout failed' });
+    return res.status(500).json({ error: "Logout failed" });
   }
 };
+
 
 //after user logedIn add more details
 export const updateUserDetails = async (req: Request, res: Response) => {
