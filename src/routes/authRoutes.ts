@@ -15,19 +15,20 @@ import {
 
 import passport from 'passport';
 import { authenticate } from "../middlewares/authMiddleware";
+import { limiter } from "../middlewares/rateLimiter";
 
 const router = Router();
 
 
 // User registration
-router.post('/register', (register as unknown) as RequestHandler);
+router.post('/register', limiter, (register as unknown) as RequestHandler);
 
 
 // Email verification
 router.get('/verify-email', (verifyEmail as unknown) as RequestHandler);
 
 // User login
-router.post('/login', (login as unknown) as RequestHandler);
+router.post('/login', limiter, (login as unknown) as RequestHandler);
 
 //add more details authenicate user
 router.put("/addDetails", authenticate, updateUserDetails as unknown as RequestHandler);
@@ -39,7 +40,7 @@ router.post('/refresh-token', (refreshAccessToken as unknown) as RequestHandler)
 router.post('/logout', (logout as unknown) as RequestHandler);
 
 // Send OTP to phone number
-router.post('/send-otp', (sendOtpToPhone as unknown) as RequestHandler);
+router.post('/send-otp', limiter, (sendOtpToPhone as unknown) as RequestHandler);
 
 // Verify OTP
 router.post('/verify-otp', (verifyOtp as unknown) as RequestHandler);

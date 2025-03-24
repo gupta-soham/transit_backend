@@ -8,7 +8,6 @@ import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/user/userRoutes';
 import { setupSwagger } from "./swagger";
 import errorHandler from './middlewares/errorHandler'; // Import the error handler
-import { limiter } from './middlewares/rateLimiter';
 import cabRoutes from './routes/cab/cabRoutes';
 
 const app = express();
@@ -50,7 +49,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use('/api/auth', authRoutes, limiter);
+app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/cab', cabRoutes)
 
