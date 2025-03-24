@@ -85,13 +85,45 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
   }
 };
 
+export const resendVerificationEmail = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return next(new AppError('Email is required', 400));
+    }
+
+    // Find the user by email
+    const user = await prisma.user.findUnique({ where: { email } });
+
+    if (!user) {
+      return next(new AppError('User not found', 404));
+    }
+
+    // Check if email is already verified
+    if (user.emailVerified) {
+      return next(new AppError('Email is already verified', 400));
+    }
+
+    // Generate a verification token
+    const verificationToken = generateToken(user.id);
+
+    // Send verification email
+    await sendVerificationEmail(email, verificationToken);
+
+    return res.status(200).json({ message: 'Verification email sent successfully' });
+  } catch (error) {
+    console.error('Error sending verification email:', error);
+    return next(new AppError('An error occurred while sending verification email', 500));
+  }
+};
 
 //verify the email via token 
 export const verifyEmail = async (req: Request, res: Response) => {
   const { token } = req.query;
 
   if (!token) {
-    return res.status(400).json({ error: 'Token is required' });
+    return res.redirect(`${process.env.FRONTEND_APP_URL}/email-verification?success=false`);
   }
 
   try {
@@ -104,14 +136,13 @@ export const verifyEmail = async (req: Request, res: Response) => {
       data: { emailVerified: true },
     });
 
-    return res.status(200).json({ message: 'Email verified successfully. You can now log in.' });
+    // Redirect to frontend with success message
+    return res.redirect(`${process.env.FRONTEND_APP_URL}/email-verification?success=true`);
   } catch (error) {
     console.error('Error during email verification:', error);
-    return res.status(400).json({ error: 'Invalid or expired token' });
+    return res.redirect(`${process.env.FRONTEND_APP_URL}/email-verification?success=false`);
   }
 };
-
-
 
 //loged in
 export const login = async (req: Request, res: Response) => {

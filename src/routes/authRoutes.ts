@@ -5,6 +5,7 @@ import {
   logout,
   refreshAccessToken,
   register,
+  resendVerificationEmail,
   resetPassword,
   sendOtpToPhone,
   sendResetEmailController,
@@ -26,6 +27,9 @@ router.post('/register', limiter, (register as unknown) as RequestHandler);
 
 // Email verification
 router.get('/verify-email', (verifyEmail as unknown) as RequestHandler);
+
+// Resend email verification
+router.post('/resend-email', limiter, (resendVerificationEmail as unknown) as RequestHandler);
 
 // User login
 router.post('/login', limiter, (login as unknown) as RequestHandler);
