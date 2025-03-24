@@ -35,3 +35,22 @@ jobs:
             docker rm transit-backend || true
             docker pull abhitsahu/transit-backend:latest
             docker run -d -p 8000:8000 --name transit-backend --env-file /home/ubuntu/.env abhitsahu/transit-backend:latest
+
+            # Clean up old images (keeping last 3)
+            docker images | grep abhitsahu/transit-backend | sort -r | awk 'NR>3 {print $3}' | xargs -r docker rmi
+
+            # Clean system packages and cache
+            sudo apt-get clean
+            sudo apt-get autoclean
+            sudo apt-get autoremove -y
+
+            # Check disk usage and alert if over 80%
+            DISK_USAGE=$(df -h / | awk 'NR==2 {print $5}' | sed 's/%//')
+            if [ "$DISK_USAGE" -gt 80 ]; then
+              echo "WARNING: Disk usage is at ${DISK_USAGE}%"
+            fi
+
+            # Prune Docker resources (except networks which might be needed)
+            docker image prune -f
+            docker container prune -f --filter "until=24h"
+            docker volume prune -f  

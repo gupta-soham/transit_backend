@@ -2,24 +2,29 @@ FROM node:22-slim
 
 WORKDIR /app
 
-# Install OpenSSL (required for Prisma)
-RUN apt-get update -y && apt-get install -y openssl
+# Install OpenSSL (required for Prisma) and clean up in the same layer
+RUN apt-get update -y && \
+    apt-get install -y openssl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Copy package files
 COPY package.json package-lock.json* ./
 
-# Copy prisma schema first (before npm ci)
+# Copy prisma schema first
 COPY prisma ./prisma/
 
-# Install dependencies and generate Prisma client
-RUN npm install
-RUN npx prisma generate
+# Install dependencies, generate Prisma client and clean npm cache
+RUN npm install && \
+    npx prisma generate && \
+    npm cache clean --force
 
 # Copy the rest of the application
 COPY . .
 
-# Build the TypeScript application
-RUN npm run build
+# Build the TypeScript application and keep only production dependencies
+RUN npm run build && \
+    npm prune --production
 
 # Expose the port the app runs on
 EXPOSE 8000
