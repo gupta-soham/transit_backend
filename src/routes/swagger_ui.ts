@@ -857,7 +857,134 @@
  *                   example: "Failed to fetch trip quote"
  */
 
+/**
+ * @swagger
+ * tags:
+ *   name: Payments
+ *   description: Razorpay Payment endpoints
+ */
 
+/**
+ * @swagger
+ * /api/payments/create-order:
+ *   post:
+ *     summary: Create a Razorpay payment order
+ *     description: Generates a Razorpay order for payment processing
+ *     tags: [Payments]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - amount
+ *               - name
+ *               - email
+ *               - phoneNumber
+ *             properties:
+ *               amount:
+ *                 type: number
+ *                 description: Payment amount in rupees
+ *                 example: 100
+ *               currency:
+ *                 type: string
+ *                 description: Currency code
+ *                 default: INR
+ *                 example: INR
+ *               name:
+ *                 type: string
+ *                 description: Customer's full name
+ *                 example: John Doe
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: Customer's email address
+ *                 example: john.doe@example.com
+ *               phoneNumber:
+ *                 type: string
+ *                 description: Customer's phone number
+ *                 example: "9999999999"
+ *     responses:
+ *       200:
+ *         description: Order created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: Razorpay order ID
+ *                 amount:
+ *                   type: number
+ *                   description: Order amount in paise
+ *                 currency:
+ *                   type: string
+ *                   description: Currency code
+ *       400:
+ *         description: Validation error
+ *       500:
+ *         description: Server error
+ */
 
-
-
+/**
+ * @swagger
+ * /api/payments/verify-payment:
+ *   post:
+ *     summary: Verify Razorpay payment
+ *     description: Verifies the payment signature and confirms the transaction
+ *     tags: [Payments]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - razorpay_order_id
+ *               - razorpay_payment_id
+ *               - razorpay_signature
+ *             properties:
+ *               razorpay_order_id:
+ *                 type: string
+ *                 description: Razorpay order ID
+ *                 example: "order_123456789"
+ *               razorpay_payment_id:
+ *                 type: string
+ *                 description: Razorpay payment ID
+ *                 example: "pay_123456789"
+ *               razorpay_signature:
+ *                 type: string
+ *                 description: Payment signature for verification
+ *                 example: "abc123signature"
+ *     responses:
+ *       200:
+ *         description: Payment verified successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: Payment verified successfully
+ *       400:
+ *         description: Payment verification failed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: failed
+ *                 message:
+ *                   type: string
+ *                   example: Payment verification failed
+ *       500:
+ *         description: Server error
+ */

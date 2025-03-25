@@ -7,6 +7,7 @@ import errorHandler from './middlewares/errorHandler'; // Import the error handl
 import authRoutes from './routes/authRoutes';
 import cabRoutes from './routes/cab/cabRoutes';
 import webhookRoutes from './routes/cab/webhookRoutes';
+import razorpayRoutes from './routes/payments/razorpay';
 import userRoutes from './routes/user/userRoutes';
 import { setupSwagger } from "./swagger";
 import passport from './utils/passport';
@@ -54,6 +55,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/cab', cabRoutes);
 app.use('/api/webhook', webhookRoutes);
+app.use('/api/payments', razorpayRoutes);
 
 app.get('/', (req, res) => {
   res.send('Transit');
