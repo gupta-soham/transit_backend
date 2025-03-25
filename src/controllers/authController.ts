@@ -17,8 +17,11 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const accessTokenCookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict' as const,
-  maxAge: 15 * 60 * 1000, // 15 minutes in milliseconds
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' as const : 'lax' as const,
+  domain: process.env.NODE_ENV === 'production' 
+    ? 'api.transitco.in'  // Use your actual domain
+    : 'localhost',
+  path: '/',
 };
 
 const refreshTokenCookieOptions = {

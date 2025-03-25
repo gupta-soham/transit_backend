@@ -57,10 +57,18 @@ passport.serializeUser((user: any, done) => {
 // Deserialize user from session
 passport.deserializeUser(async (id: string, done) => {
   try {
-    const user = await prisma.user.findUnique({ where: { id } });
-    done(null, user || undefined);
+    const user = await prisma.user.findUnique({
+      where: { id },
+      select: { 
+        id: true, 
+        email: true, 
+        name: true,
+        emailVerified: true 
+      }
+    });
+    done(null, user);
   } catch (error) {
-    done(error, undefined);
+    done(error);
   }
 });
 

@@ -1,4 +1,4 @@
-import { RequestHandler, Router } from 'express';
+import { Request, Response, RequestHandler, Router } from 'express';
 import {
   googleauth,
   login,
@@ -35,7 +35,7 @@ router.post('/resend-email', limiter, (resendVerificationEmail as unknown) as Re
 router.post('/login', limiter, (login as unknown) as RequestHandler);
 
 //add more details authenicate user
-router.put("/addDetails", authenticate, updateUserDetails as unknown as RequestHandler);
+router.put("/addDetails", (authenticate as unknown) as RequestHandler, updateUserDetails as unknown as RequestHandler);
 
 // Refresh access token
 router.post('/refresh-token', (refreshAccessToken as unknown) as RequestHandler);
@@ -69,9 +69,17 @@ router.get("/logout-session", (req, res) => {
 });
 
 // Get current user
-router.get('/current_user', (req, res) => {
-  res.send(req.user);
-});
+router.get('/current_user', (authenticate as unknown) as RequestHandler, ((req: Request, res: Response) => {
+  if (req.user) {
+    return res.status(200).json({ 
+      id: (req.user as any).id, 
+      email: (req.user as any).email,
+      name: (req.user as any).name,
+      emailVerified: (req.user as any).emailVerified
+    });
+  }
+  return res.status(401).json({ message: "Not authenticated" });
+}) as unknown as RequestHandler);
 
 // Request password reset  
 router.post('/request-reset', sendResetEmailController as unknown as RequestHandler);

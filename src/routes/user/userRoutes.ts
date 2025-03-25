@@ -6,8 +6,8 @@ const userRoutes = Router();
 
 //authenticate user routes
 //get user details
-userRoutes.get('/profile/details',authenticate, getProfile as unknown as RequestHandler );
-userRoutes.put('/profile/update',authenticate, updateProfile as unknown as RequestHandler );
+userRoutes.get('/profile/details', (authenticate as unknown) as RequestHandler, getProfile as unknown as RequestHandler);
+userRoutes.put('/profile/update', (authenticate as unknown) as RequestHandler, updateProfile as unknown as RequestHandler);
 
 
 export default userRoutes;

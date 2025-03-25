@@ -1,5 +1,5 @@
 import axios from 'axios';
-import express, { Request, Response } from 'express';
+import express, { Request, Response, RequestHandler } from 'express';
 import { authenticate } from '../../middlewares/authMiddleware';
 import { BookingIdSchema, BookingRequestSchema, CancelBookingSchema, TripRequestSchema, UpdateBookingSchema } from "../../validations/cabValidation";
 
@@ -72,7 +72,7 @@ cabRoutes.post('/getQuote', async (req: Request, res: Response): Promise<any> =>
 });
 
 // Route to book a cab
-cabRoutes.post('/book', authenticate, async (req: Request, res: Response): Promise<any> => {
+cabRoutes.post('/book', (authenticate as unknown) as RequestHandler, async (req: Request, res: Response): Promise<any> => {
     try {
         const result = BookingRequestSchema.safeParse(req.body);
 
@@ -187,7 +187,7 @@ cabRoutes.get('/getBookingDetails', async (req: Request, res: Response): Promise
 });
 
 // Route to update booking
-cabRoutes.post('/updateBooking', authenticate, async (req: Request, res: Response): Promise<any> => {
+cabRoutes.post('/updateBooking', (authenticate as unknown) as RequestHandler, async (req: Request, res: Response): Promise<any> => {
     try {
         const result = UpdateBookingSchema.safeParse(req.body);
 
@@ -267,7 +267,7 @@ cabRoutes.get('/getCancellationReasons', async (req: Request, res: Response): Pr
 });
 
 // Route to cancel booking
-cabRoutes.post('/cancelBooking', authenticate, async (req: Request, res: Response): Promise<any> => {
+cabRoutes.post('/cancelBooking', (authenticate as unknown) as RequestHandler, async (req: Request, res: Response): Promise<any> => {
     try {
         const result = CancelBookingSchema.safeParse(req.body);
 

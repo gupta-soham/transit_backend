@@ -590,5 +590,274 @@
  *                   example: "Logout failed"
  */
 
+/**
+ * @swagger
+ * /api/auth/current_user:
+ *   get:
+ *     summary: Get current authenticated user
+ *     description: Returns details of the currently authenticated user.
+ *     tags: [Auth]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved user details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   example: "12345"
+ *                 email:
+ *                   type: string
+ *                   example: "user@example.com"
+ *                 name:
+ *                   type: string
+ *                   example: "John Doe"
+ *                 emailVerified:
+ *                   type: boolean
+ *                   example: true
+ *       401:
+ *         description: Not authenticated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Not authenticated"
+ */
+
+/**
+ * @swagger
+ * /api/auth/resend-email:
+ *   post:
+ *     summary: Resend email verification
+ *     description: Sends a new email verification link to the user.
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: "user@example.com"
+ *     responses:
+ *       200:
+ *         description: Verification email sent successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Verification email sent successfully"
+ *       400:
+ *         description: Bad request (missing email or email already verified)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Email is required"
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "User not found"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "An error occurred while sending verification email"
+ */
+
+
+////cab routes
+
+/**
+ * @swagger
+ * /api/cab/getQuote:
+ *   post:
+ *     summary: Get a trip quote
+ *     description: Fetches a fare estimate for a trip based on trip type, cab type, and route details.
+ *     tags: [Cab Booking]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               tripType:
+ *                 type: integer
+ *                 enum: [1, 2, 3, 4, 9, 10, 11]
+ *                 description: Trip type code (1=One Way, 2=Round Trip, 3=Multi City, 4=Airport Transfer, etc.)
+ *                 example: 1
+ *               cabType:
+ *                 type: array
+ *                 items:
+ *                   type: integer
+ *                 description: Allowed cab models (e.g., 1=Compact, 2=SUV, 3=Sedan, etc.)
+ *                 example: [1, 2, 3]
+ *               routes:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     startDate:
+ *                       type: string
+ *                       format: date
+ *                       example: "2024-03-21"
+ *                     startTime:
+ *                       type: string
+ *                       format: time
+ *                       example: "01:35:00"
+ *                     source:
+ *                       type: object
+ *                       properties:
+ *                         address:
+ *                           type: string
+ *                           example: "NSC Bose Airport"
+ *                         name:
+ *                           type: string
+ *                           example: "Netaji Subhas Chandra Bose International Airport (CCU), Kolkata"
+ *                         coordinates:
+ *                           type: object
+ *                           properties:
+ *                             latitude:
+ *                               type: number
+ *                               example: 22.6531496
+ *                             longitude:
+ *                               type: number
+ *                               example: 88.4448719
+ *                     destination:
+ *                       type: object
+ *                       properties:
+ *                         address:
+ *                           type: string
+ *                           example: "Sodepur Traffic More, Kolkata"
+ *                         name:
+ *                           type: string
+ *                           example: "Khardaha"
+ *                         coordinates:
+ *                           type: object
+ *                           properties:
+ *                             latitude:
+ *                               type: number
+ *                               example: 22.7008099
+ *                             longitude:
+ *                               type: number
+ *                               example: 88.3747597
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved trip quote
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     startDate:
+ *                       type: string
+ *                       example: "2024-03-21"
+ *                     startTime:
+ *                       type: string
+ *                       example: "06:01:00"
+ *                     quotedDistance:
+ *                       type: integer
+ *                       example: 335
+ *                     estimatedDuration:
+ *                       type: integer
+ *                       example: 360
+ *                     cabRate:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           cab:
+ *                             type: object
+ *                             properties:
+ *                               id:
+ *                                 type: integer
+ *                                 example: 1
+ *                               type:
+ *                                 type: string
+ *                                 example: "Compact (Value)"
+ *                               model:
+ *                                 type: string
+ *                                 example: "Indica, Swift, Alto, Ford Figo or equivalent"
+ *                               seatingCapacity:
+ *                                 type: integer
+ *                                 example: 4
+ *                           fare:
+ *                             type: object
+ *                             properties:
+ *                               baseFare:
+ *                                 type: number
+ *                                 example: 4366
+ *                               totalAmount:
+ *                                 type: number
+ *                                 example: 4584
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Validation failed"
+ *                 details:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       path:
+ *                         type: string
+ *                         example: "routes.0.source.coordinates.latitude"
+ *                       message:
+ *                         type: string
+ *                         example: "Latitude must be a number"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Failed to fetch trip quote"
+ */
+
+
+
 
 
