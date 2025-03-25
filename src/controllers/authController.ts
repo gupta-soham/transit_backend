@@ -126,7 +126,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
   const { token } = req.query;
 
   if (!token) {
-    return res.redirect(`${process.env.FRONTEND_APP_URL}/email-verification?success=false`);
+    return res.redirect(`${process.env.FRONTEND_APP_URL}/Unverified-email?success=false`);
   }
 
   try {
@@ -140,10 +140,10 @@ export const verifyEmail = async (req: Request, res: Response) => {
     });
 
     // Redirect to frontend with success message
-    return res.redirect(`${process.env.FRONTEND_APP_URL}/email-verification?success=true`);
+    return res.redirect(`${process.env.FRONTEND_APP_URL}/verified-email?success=true`);
   } catch (error) {
     console.error('Error during email verification:', error);
-    return res.redirect(`${process.env.FRONTEND_APP_URL}/email-verification?success=false`);
+    return res.redirect(`${process.env.FRONTEND_APP_URL}/Unverified-email?success=false`);
   }
 };
 
