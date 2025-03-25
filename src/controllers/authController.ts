@@ -463,7 +463,7 @@ export const resetPassword = async (req: Request, res: Response, next: NextFunct
         resetTokenExpiresAt: null,
       },
     });
-
+    
     return res.status(200).json({ message: 'Password reset successfully' });
   } catch (error) {
     console.error('Error resetting password:', error);

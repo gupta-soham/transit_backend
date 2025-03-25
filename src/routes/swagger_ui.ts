@@ -857,6 +857,8 @@
  *                   example: "Failed to fetch trip quote"
  */
 
+
+
 /**
  * @swagger
  * tags:
@@ -987,4 +989,859 @@
  *                   example: Payment verification failed
  *       500:
  *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /api/cab/book:
+ *   post:
+ *     summary: Book a cab
+ *     description: Books a cab for a user based on trip details and traveler information.
+ *     tags: [Cab Booking]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               tnc:
+ *                 type: integer
+ *                 example: 1
+ *               referenceId:
+ *                 type: string
+ *                 example: "tttt"
+ *               tripType:
+ *                 type: integer
+ *                 example: 1
+ *               cabType:
+ *                 type: integer
+ *                 example: 3
+ *               fare:
+ *                 type: object
+ *                 properties:
+ *                   advanceReceived:
+ *                     type: number
+ *                     example: 0
+ *                   totalAmount:
+ *                     type: number
+ *                     example: 2082
+ *               platform:
+ *                 type: object
+ *                 properties:
+ *                   deviceName:
+ *                     type: string
+ *                   ip:
+ *                     type: string
+ *                   type:
+ *                     type: string
+ *               apkVersion:
+ *                 type: string
+ *                 example: ""
+ *               sendEmail:
+ *                 type: integer
+ *                 example: 1
+ *               sendSms:
+ *                 type: integer
+ *                 example: 1
+ *               routes:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     startDate:
+ *                       type: string
+ *                       format: date
+ *                       example: "2024-04-19"
+ *                     startTime:
+ *                       type: string
+ *                       format: time
+ *                       example: "17:10:00"
+ *                     source:
+ *                       type: object
+ *                       properties:
+ *                         address:
+ *                           type: string
+ *                           example: "Bengaluru"
+ *                         coordinates:
+ *                           type: object
+ *                           properties:
+ *                             latitude:
+ *                               type: number
+ *                               example: 12.9087929
+ *                             longitude:
+ *                               type: number
+ *                               example: 77.6424978
+ *                     destination:
+ *                       type: object
+ *                       properties:
+ *                         address:
+ *                           type: string
+ *                           example: "Bengaluru airport"
+ *                         coordinates:
+ *                           type: object
+ *                           properties:
+ *                             latitude:
+ *                               type: number
+ *                               example: 13.2007713
+ *                             longitude:
+ *                               type: number
+ *                               example: 77.710228
+ *               traveller:
+ *                 type: object
+ *                 properties:
+ *                   firstName:
+ *                     type: string
+ *                     example: "Tapesh"
+ *                   lastName:
+ *                     type: string
+ *                   primaryContact:
+ *                     type: object
+ *                     properties:
+ *                       code:
+ *                         type: integer
+ *                         example: 91
+ *                       number:
+ *                         type: string
+ *                         example: "9868972016"
+ *                   alternateContact:
+ *                     type: object
+ *                     properties:
+ *                       code:
+ *                         type: integer
+ *                         example: 91
+ *                       number:
+ *                         type: string
+ *                   email:
+ *                     type: string
+ *                     example: "test.yadav4@gmail.com"
+ *                   companyName:
+ *                     type: string
+ *                   address:
+ *                     type: string
+ *                   gstin:
+ *                     type: string
+ *               additionalInfo:
+ *                 type: object
+ *                 properties:
+ *                   specialInstructions:
+ *                     type: string
+ *                     example: "cab should be clean"
+ *                   noOfPerson:
+ *                     type: integer
+ *                     example: 4
+ *                   noOfLargeBags:
+ *                     type: integer
+ *                     example: 0
+ *                   noOfSmallBags:
+ *                     type: integer
+ *                     example: 3
+ *                   carrierRequired:
+ *                     type: integer
+ *                     example: 0
+ *                   kidsTravelling:
+ *                     type: integer
+ *                     example: 0
+ *                   seniorCitizenTravelling:
+ *                     type: integer
+ *                     example: 0
+ *                   womanTravelling:
+ *                     type: integer
+ *                     example: 0
+ *     responses:
+ *       200:
+ *         description: Successfully booked a cab
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     bookingId:
+ *                       type: string
+ *                       example: "QT101881515"
+ *                     referenceId:
+ *                       type: string
+ *                       example: "EMT86708952"
+ *                     statusDesc:
+ *                       type: string
+ *                       example: "Quoted"
+ *                     statusCode:
+ *                       type: integer
+ *                       example: 1
+ *                     tripType:
+ *                       type: integer
+ *                       example: 1
+ *                     tripDesc:
+ *                       type: string
+ *                       example: "One Way"
+ *                     cabType:
+ *                       type: integer
+ *                       example: 3
+ *                     startDate:
+ *                       type: string
+ *                       example: "2021-09-09"
+ *                     startTime:
+ *                       type: string
+ *                       example: "06:01:00"
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Validation failed"
+ *                 details:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       path:
+ *                         type: string
+ *                         example: "routes.0.source.coordinates.latitude"
+ *                       message:
+ *                         type: string
+ *                         example: "Latitude must be a number"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Failed to book cab"
+ */
+
+/**
+ * @swagger
+ * /api/cab/confirmBooking:
+ *   post:
+ *     summary: Confirm a cab booking
+ *     description: Confirms a cab booking using the provided booking ID.
+ *     tags: [Cab Booking]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               bookingId:
+ *                 type: string
+ *                 description: The unique booking ID to confirm the reservation.
+ *                 example: "QT101881515"
+ *     responses:
+ *       200:
+ *         description: Successfully confirmed the booking.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     bookingId:
+ *                       type: string
+ *                       example: "OW101881515"
+ *                     referenceId:
+ *                       type: string
+ *                       example: "EMT86708952"
+ *                     statusDesc:
+ *                       type: string
+ *                       example: "Confirmed"
+ *                     statusCode:
+ *                       type: integer
+ *                       example: 2
+ *                     tripType:
+ *                       type: string
+ *                       example: "1"
+ *                     tripDesc:
+ *                       type: string
+ *                       example: "One Way"
+ *                     cabType:
+ *                       type: integer
+ *                       example: 3
+ *                     startDate:
+ *                       type: string
+ *                       format: date
+ *                       example: "2021-09-09"
+ *                     startTime:
+ *                       type: string
+ *                       format: time
+ *                       example: "06:01:00"
+ *                     totalDistance:
+ *                       type: integer
+ *                       example: 335
+ *                     estimatedDuration:
+ *                       type: integer
+ *                       example: 360
+ *                     routes:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           startDate:
+ *                             type: string
+ *                             format: date
+ *                             example: "2021-09-09"
+ *                           startTime:
+ *                             type: string
+ *                             format: time
+ *                             example: "06:01:00"
+ *                           source:
+ *                             type: object
+ *                             properties:
+ *                               address:
+ *                                 type: string
+ *                                 example: "Near Sharma Dhaba, Solan"
+ *                               coordinates:
+ *                                 type: object
+ *                                 properties:
+ *                                   latitude:
+ *                                     type: number
+ *                                     example: 30.9084
+ *                                   longitude:
+ *                                     type: number
+ *                                     example: 77.0999
+ *                           destination:
+ *                             type: object
+ *                             properties:
+ *                               address:
+ *                                 type: string
+ *                                 example: "Jaipuriya Enclave Kaushambi, Ghaziabad"
+ *                               coordinates:
+ *                                 type: object
+ *                                 properties:
+ *                                   latitude:
+ *                                     type: number
+ *                                     example: 28.642
+ *                                   longitude:
+ *                                     type: number
+ *                                     example: 77.318
+ *                     cabRate:
+ *                       type: object
+ *                       properties:
+ *                         cab:
+ *                           type: object
+ *                           properties:
+ *                             id:
+ *                               type: integer
+ *                               example: 3
+ *                             type:
+ *                               type: string
+ *                               example: "Sedan (Value)"
+ *                             category:
+ *                               type: string
+ *                               example: "Sedan"
+ *                             seatingCapacity:
+ *                               type: integer
+ *                               example: 4
+ *                         fare:
+ *                           type: object
+ *                           properties:
+ *                             baseFare:
+ *                               type: number
+ *                               example: 4579
+ *                             totalAmount:
+ *                               type: number
+ *                               example: 4808
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Validation failed"
+ *                 details:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       path:
+ *                         type: string
+ *                         example: "bookingId"
+ *                       message:
+ *                         type: string
+ *                         example: "Booking ID is required"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Failed to confirm booking"
+ *                 details:
+ *                   type: string
+ *                   example: "Unknown error"
+ */
+
+
+/**
+ * @swagger
+ * /api/cab/getBookingDetails:
+ *   get:
+ *     summary: Retrieve booking details
+ *     description: Fetches details of a booking using the provided booking ID.
+ *     tags: [Cab Booking]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               bookingId:
+ *                 type: string
+ *                 description: The unique booking ID to retrieve details.
+ *                 example: "OW101881515"
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved booking details.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     bookingId:
+ *                       type: string
+ *                       example: "OW101881515"
+ *                     statusDesc:
+ *                       type: string
+ *                       example: "Confirmed"
+ *                     statusCode:
+ *                       type: integer
+ *                       example: 2
+ *                     tripType:
+ *                       type: integer
+ *                       example: 1
+ *                     tripDistance:
+ *                       type: integer
+ *                       example: 335
+ *                     pickupDate:
+ *                       type: string
+ *                       format: date
+ *                       example: "2021-09-09"
+ *                     pickupTime:
+ *                       type: string
+ *                       format: time
+ *                       example: "06:01:00"
+ *                     traveller:
+ *                       type: object
+ *                       properties:
+ *                         firstName:
+ *                           type: string
+ *                           example: "Nidhi"
+ *                         lastName:
+ *                           type: string
+ *                           example: "Kri"
+ *                         email:
+ *                           type: string
+ *                           example: "nidhi.kumari@gmail.com"
+ *                         primaryContact:
+ *                           type: object
+ *                           properties:
+ *                             code:
+ *                               type: string
+ *                               example: "91"
+ *                             number:
+ *                               type: string
+ *                               example: "1234567890"
+ *                     cabRate:
+ *                       type: object
+ *                       properties:
+ *                         cab:
+ *                           type: object
+ *                           properties:
+ *                             id:
+ *                               type: integer
+ *                               example: 3
+ *                             type:
+ *                               type: string
+ *                               example: "Sedan (Value)"
+ *                             seatingCapacity:
+ *                               type: integer
+ *                               example: 4
+ *                         fare:
+ *                           type: object
+ *                           properties:
+ *                             baseFare:
+ *                               type: number
+ *                               example: 4579
+ *                             totalAmount:
+ *                               type: number
+ *                               example: 4808
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Validation failed"
+ *                 details:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       path:
+ *                         type: string
+ *                         example: "bookingId"
+ *                       message:
+ *                         type: string
+ *                         example: "Booking ID is required"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Failed to fetch booking details"
+ *                 details:
+ *                   type: string
+ *                   example: "Unknown error"
+ */
+
+
+
+/**
+ * @swagger
+ * /api/cab/updateBooking:
+ *   post:
+ *     summary: Update an existing booking
+ *     description: Allows updating details of an existing booking such as traveller information, contact details, and additional info.
+ *     tags: [Cab Booking]
+ *     security:
+ *       - BasicAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               bookingId:
+ *                 type: string
+ *                 description: Unique booking identifier.
+ *                 example: "OW101881515"
+ *               amountPaid:
+ *                 type: number
+ *                 description: Amount paid for the booking.
+ *                 example: 5
+ *               traveller:
+ *                 type: object
+ *                 properties:
+ *                   firstName:
+ *                     type: string
+ *                     example: "Nidhi"
+ *                   lastName:
+ *                     type: string
+ *                     example: "Kri"
+ *                   primaryContact:
+ *                     type: object
+ *                     properties:
+ *                       code:
+ *                         type: integer
+ *                         example: 91
+ *                       number:
+ *                         type: integer
+ *                         example: 1234567890
+ *                   alternateContact:
+ *                     type: object
+ *                     properties:
+ *                       code:
+ *                         type: integer
+ *                         example: 91
+ *                       number:
+ *                         type: integer
+ *                         example: 8274835281
+ *                   email:
+ *                     type: string
+ *                     format: email
+ *                     example: "nidhi.kumari@gmail.com"
+ *               additionalInfo:
+ *                 type: object
+ *                 properties:
+ *                   specialInstructions:
+ *                     type: string
+ *                     example: "Cab should be clean"
+ *                   noOfPerson:
+ *                     type: integer
+ *                     example: 1
+ *                   noOfLargeBags:
+ *                     type: integer
+ *                     example: 1
+ *                   noOfSmallBags:
+ *                     type: integer
+ *                     example: 1
+ *                   carrierRequired:
+ *                     type: boolean
+ *                     example: true
+ *                   kidsTravelling:
+ *                     type: boolean
+ *                     example: true
+ *                   seniorCitizenTravelling:
+ *                     type: boolean
+ *                     example: true
+ *                   womanTravelling:
+ *                     type: boolean
+ *                     example: true
+ *     responses:
+ *       200:
+ *         description: Booking updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "update booking successfully"
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Validation failed"
+ *                 details:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       path:
+ *                         type: string
+ *                         example: "traveller.primaryContact.number"
+ *                       message:
+ *                         type: string
+ *                         example: "Primary contact number is required"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Failed to update booking"
+ *                 details:
+ *                   type: string
+ *                   example: "Unexpected error occurred"
+ */
+
+/**
+ * @swagger
+ * /api/cab/getTermsAndConditions:
+ *   get:
+ *     summary: Get Terms and Conditions
+ *     description: Fetches the terms and conditions for booking.
+ *     tags: [Cab Booking]
+ *     security:
+ *       - BasicAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved terms and conditions
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 termsAndConditions:
+ *                   type: string
+ *                   example: "These are the terms and conditions for booking..."
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Failed to fetch terms and conditions"
+ *                 details:
+ *                   type: string
+ *                   example: "Unexpected error occurred"
+ */
+
+/**
+ * @swagger
+ * /api/cab/getCancellationReasons:
+ *   get:
+ *     summary: Get Cancellation Reasons
+ *     description: Fetches the list of possible cancellation reasons for a booking.
+ *     tags: [Cab Booking]
+ *     security:
+ *       - BasicAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved cancellation reasons
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     cancellationList:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: integer
+ *                             example: 1
+ *                           text:
+ *                             type: string
+ *                             example: "Plan changed"
+ *                           placeholder:
+ *                             type: string
+ *                             example: "Please provide additional details here"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Failed to fetch cancellation reasons"
+ *                 details:
+ *                   type: string
+ *                   example: "Unexpected error occurred"
+ */
+
+/**
+ * @swagger
+ * /api/cab/cancelBooking:
+ *   post:
+ *     summary: Cancel a Booking
+ *     description: Cancels an existing booking based on the provided booking ID and reason.
+ *     tags: [Cab Booking]
+ *     security:
+ *       - BasicAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               bookingId:
+ *                 type: string
+ *                 description: Unique booking identifier.
+ *                 example: "OW101881515"
+ *               reason:
+ *                 type: string
+ *                 description: Reason for cancellation.
+ *                 example: "I have some urgent work"
+ *               reasonId:
+ *                 type: string
+ *                 description: ID of the cancellation reason (if applicable).
+ *                 example: ""
+ *     responses:
+ *       200:
+ *         description: Successfully cancelled booking
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     bookingId:
+ *                       type: string
+ *                       example: "OW101881515"
+ *                     message:
+ *                       type: string
+ *                       example: "Booking cancelled successfully"
+ *                     cancellationCharge:
+ *                       type: number
+ *                       example: 0
+ *                     refundAmount:
+ *                       type: number
+ *                       example: 5
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Validation failed"
+ *                 details:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       path:
+ *                         type: string
+ *                         example: "reasonId"
+ *                       message:
+ *                         type: string
+ *                         example: "Reason ID should be a valid value"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Failed to cancel booking"
+ *                 details:
+ *                   type: string
+ *                   example: "Unexpected error occurred"
  */
