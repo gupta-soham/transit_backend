@@ -16,11 +16,12 @@ export enum CabType {
     COMPACT = 1,
     SUV = 2,
     SEDAN = 3,
-    ASSURED_DZIRE = 5,
-    ASSURED_INNOVA = 6,
-    COMPACT_CNG = 72,
-    SEDAN_CNG = 73,
-    SUV_CNG = 74
+    COMPACT_VALUE= 14,
+    SUV_VALUE = 15,
+    SEDAN_VALUE = 16,
+    COMPACT_ECO = 72,
+    SEDAN_ECO = 73,
+    SUV_ECO = 74
 }
 
 // Zod schemas for getQuote
