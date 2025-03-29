@@ -63,7 +63,7 @@ router.get(
 router.get("/logout-session", (req, res) => {
   req.logout((err) => {
     if (err) return res.status(500).json({ message: "Logout failed" });
-    const redirectUrl = process.env.FRONTEND_APP_URL || 'http://localhost:5173';
+    const redirectUrl = process.env.FRONTEND_APP_URL || 'https://www.transitco.in/';
     res.redirect(redirectUrl);
   });
 });
