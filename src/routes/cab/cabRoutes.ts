@@ -2,6 +2,7 @@ import axios from 'axios';
 import express, { Request, Response, RequestHandler } from 'express';
 import { authenticate } from '../../middlewares/authMiddleware';
 import { BookingIdSchema, BookingRequestSchema, CancelBookingSchema, TripRequestSchema, UpdateBookingSchema } from "../../validations/cabValidation";
+import { limiter } from '../../middlewares/rateLimiter';
 
 const cabRoutes = express.Router();
 const authorization = process.env.GOZO_API_AUTH;
@@ -11,7 +12,7 @@ if (!authorization || !process.env.GOZO_API_URL) {
 }
 
 // Route to get trip quotes
-cabRoutes.post('/getQuote', async (req: Request, res: Response): Promise<any> => {
+cabRoutes.post('/getQuote', limiter, async (req: Request, res: Response): Promise<any> => {
     try {
         const result = TripRequestSchema.safeParse(req.body);
 
