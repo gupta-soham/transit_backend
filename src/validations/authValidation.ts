@@ -44,7 +44,7 @@ export const otpSchema = z.object({
   otp: z.string().length(6, 'OTP must be 6 digits long'),
 });
 
-export const contactSchema = z.object({
+  export const contact_adver_Schema = z.object({
     firstName: z.string().min(1),
     lastName: z.string().min(1),
     country: z.string().optional(),
@@ -54,5 +54,5 @@ export const contactSchema = z.object({
     companyEmail: z.string().email(),
     phone: z.string().optional(),
     message: z.string().min(1),
-    interested: z.boolean(),
+    interested: z.boolean().default(false),
   });
