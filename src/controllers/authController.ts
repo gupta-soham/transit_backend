@@ -19,7 +19,7 @@ const accessTokenCookieOptions = {
   secure: process.env.NODE_ENV === 'production',
   sameSite: process.env.NODE_ENV === 'production' ? 'none' as const : 'lax' as const,
   domain: process.env.NODE_ENV === 'production' 
-    ? 'api.transitco.in'  // Use your actual domain
+    ? 'api.transitco.in'
     : 'localhost',
   path: '/',
 };
@@ -202,7 +202,9 @@ export const login = async (req: Request, res: Response) => {
         id: user.id,
         email: user.email,
         name: user.name
-      }
+      },
+      accessToken,
+      refreshToken
     });
   } catch (error: any) {
     return res.status(400).json({ error: error.message || 'Login failed' });
