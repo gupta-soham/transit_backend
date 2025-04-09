@@ -73,7 +73,7 @@ cabRoutes.post('/getQuote', limiter, async (req: Request, res: Response): Promis
 });
 
 // Route to book a cab
-cabRoutes.post('/book', async (req: Request, res: Response): Promise<any> => {
+cabRoutes.post('/book', (authenticate as unknown) as RequestHandler, async (req: Request, res: Response): Promise<any> => {
     try {
         const result = BookingRequestSchema.safeParse(req.body);
 
@@ -110,7 +110,7 @@ cabRoutes.post('/book', async (req: Request, res: Response): Promise<any> => {
 });
 
 // Route to confirm booking
-cabRoutes.post('/confirmBooking', async (req: Request, res: Response): Promise<any> => {
+cabRoutes.post('/confirmBooking', (authenticate as unknown) as RequestHandler, async (req: Request, res: Response): Promise<any> => {
     try {
         const result = BookingIdSchema.safeParse(req.body);
 
@@ -149,7 +149,7 @@ cabRoutes.post('/confirmBooking', async (req: Request, res: Response): Promise<a
 });
 
 // Route to get booking details
-cabRoutes.get('/getBookingDetails', async (req: Request, res: Response): Promise<any> => {
+cabRoutes.get('/getBookingDetails', (authenticate as unknown) as RequestHandler, async (req: Request, res: Response): Promise<any> => {
     try {
         const result = BookingIdSchema.safeParse(req.body);
 
@@ -188,7 +188,7 @@ cabRoutes.get('/getBookingDetails', async (req: Request, res: Response): Promise
 });
 
 // Route to update booking
-cabRoutes.post('/updateBooking', async (req: Request, res: Response): Promise<any> => {
+cabRoutes.post('/updateBooking', (authenticate as unknown) as RequestHandler, async (req: Request, res: Response): Promise<any> => {
     try {
         const result = UpdateBookingSchema.safeParse(req.body);
 
@@ -268,7 +268,7 @@ cabRoutes.get('/getCancellationReasons', async (req: Request, res: Response): Pr
 });
 
 // Route to cancel booking
-cabRoutes.post('/cancelBooking', async (req: Request, res: Response): Promise<any> => {
+cabRoutes.post('/cancelBooking', (authenticate as unknown) as RequestHandler, async (req: Request, res: Response): Promise<any> => {
     try {
         const result = CancelBookingSchema.safeParse(req.body);
 

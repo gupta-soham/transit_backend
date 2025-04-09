@@ -5,7 +5,10 @@ import { JwtPayload } from 'jsonwebtoken';
 
 export const authenticate = async (req: Request, res: Response, next: NextFunction): Promise<void | Response> => {
   try {
-    const accessToken = req.cookies.accessToken;
+    const accessToken = req.cookies.accessToken || req.headers['authorization']?.split(' ')[1];
+    if (Array.isArray(accessToken)) {
+      return res.status(401).json({ message: "Invalid access token" });
+    }
 
     if (!accessToken) {
       return res.status(401).json({ message: "No access token" });
